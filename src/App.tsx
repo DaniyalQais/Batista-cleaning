@@ -606,7 +606,7 @@ export default function App() {
 
             <div className="space-y-1">
               <span className="text-[10px] font-mono font-black tracking-widest text-[#FF5722] uppercase block">
-                BLUEPRINT REGISTERED REGISTERED
+                BLUEPRINT REGISTERED
               </span>
               <h2 className="text-2xl font-display font-black text-gray-900 leading-tight">
                 Spec Config Complete!
@@ -1585,7 +1585,7 @@ export default function App() {
                 value={contactInfo.phone}
                 onChange={(v) => setContactInfo({ ...contactInfo, phone: v })}
                 icon={Phone}
-                placeholder="(305) 555-0199"
+                placeholder="(480) 869-4902"
                 required
               />
               <FloatingInput
@@ -1604,7 +1604,7 @@ export default function App() {
                 value={contactInfo.address}
                 onChange={(v) => setContactInfo({ ...contactInfo, address: v })}
                 icon={MapPin}
-                placeholder="1590 Biscayne Blvd, Apt 4C"
+                placeholder="1234 E Main St, Phoenix, AZ"
                 required
               />
 

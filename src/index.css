@@ -270,12 +270,24 @@ input[type="range"]::-moz-range-thumb {
 /* Date input — prevent label/placeholder overlap, single calendar icon */
 .date-input-field {
   min-height: 3.25rem;
+  position: relative;
+}
+
+/* Hide browser mm/dd/yyyy ghost text until focused or a date is chosen */
+.date-input-field:not(:focus):invalid::-webkit-datetime-edit {
+  color: transparent;
+}
+
+.date-input-field:focus::-webkit-datetime-edit,
+.date-input-field:valid::-webkit-datetime-edit {
+  color: #111827;
 }
 
 .date-input-field::-webkit-calendar-picker-indicator {
   cursor: pointer;
   opacity: 0.55;
   margin-left: 0.25rem;
+  padding: 0.25rem;
 }
 
 .date-input-field::-webkit-calendar-picker-indicator:hover {
@@ -284,6 +296,7 @@ input[type="range"]::-moz-range-thumb {
 
 .date-input-field::-webkit-datetime-edit {
   padding: 0;
+  line-height: 1.4;
 }
 
 .date-input-field::-webkit-datetime-edit-fields-wrapper {
