@@ -187,7 +187,7 @@ export function Navbar({ onLogoClick, onNavigate, onEstimateClick }: NavbarProps
 
   return (
     <>
-      <div className="sticky top-0 z-50 w-full">
+      <div className="relative z-50 w-full">
         <TopHeaderBar />
 
         <header className="w-full bg-white/95 backdrop-blur-md border-b border-gray-100/90 shadow-[0_1px_0_rgba(17,24,39,0.04),0_4px_16px_-4px_rgba(17,24,39,0.06)]">

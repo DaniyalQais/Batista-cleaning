@@ -289,7 +289,7 @@ export default function App() {
       />
 
       {/* 1. PREMIUM COHESIVE MARKETING HERO SECTION */}
-      <section id="home" ref={heroRef} className="w-full relative min-h-[85vh] flex items-center justify-center overflow-hidden py-16 px-4 scroll-mt-header">
+      <section id="home" ref={heroRef} className="w-full relative min-h-[85vh] flex items-center justify-center overflow-hidden py-16 px-4">
         <div 
           className="absolute inset-0 bg-cover bg-center scale-105"
           style={{ backgroundImage: `url(${PREMIUM_IMAGES.heroBg})` }}
@@ -480,7 +480,7 @@ export default function App() {
       {/* 2. INSTANT SCOPE BUILDER SECTION */}
       <section 
         ref={builderRef} 
-        className="w-full max-w-6xl mx-auto py-16 px-4 space-y-8 scroll-mt-header"
+        className="w-full max-w-6xl mx-auto py-16 px-4 space-y-8"
       >
         <div className="text-center space-y-2">
           <span className="text-[10px] font-mono font-black tracking-widest text-[#FF5722] uppercase bg-[#FF5722]/10 px-3 py-1 rounded-md inline-block">
@@ -1210,7 +1210,7 @@ export default function App() {
       </section>
 
       {/* 4. TRUST BADGES ROW & CORE PILLARS SECTION */}
-      <section id="about" className="w-full max-w-5xl mx-auto px-4 py-16 space-y-12 scroll-mt-header">
+      <section id="about" className="w-full max-w-5xl mx-auto px-4 py-16 space-y-12">
         <div className="text-center space-y-2">
           <span className="text-[10px] font-mono font-black tracking-widest text-[#FF5722] uppercase bg-[#FF5722]/10 px-3 py-1 rounded-md inline-block">
             VERIFIED BRAND PILLARS
@@ -1330,7 +1330,7 @@ export default function App() {
       </section>
 
       {/* 5. SERVICE GALLERY PHOTO SHOWCASE */}
-      <section id="services-preview" className="w-full bg-white border-y border-gray-100 py-16 px-4 scroll-mt-header">
+      <section id="services-preview" className="w-full bg-white border-y border-gray-100 py-16 px-4">
         <div className="max-w-5xl mx-auto space-y-10">
           <div className="text-center space-y-2">
             <span className="text-[10px] font-mono font-black tracking-widest text-[#FF5722] uppercase block">
@@ -1496,7 +1496,7 @@ export default function App() {
       <section 
         id="contact"
         ref={contactFormRef}
-        className="w-full bg-gradient-to-b from-gray-50 to-white border-t border-gray-100 py-16 px-4 pb-28 md:pb-16 scroll-mt-header"
+        className="w-full bg-gradient-to-b from-gray-50 to-white border-t border-gray-100 py-16 px-4 pb-28 md:pb-16"
       >
         <div className="max-w-xl mx-auto space-y-6">
           <motion.div
