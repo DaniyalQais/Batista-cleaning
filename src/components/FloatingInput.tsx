@@ -39,7 +39,8 @@ export function FloatingInput({
       >
         {showIcon && (
           <Icon
-            className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors duration-200 ${
+            aria-hidden="true"
+            className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 shrink-0 z-10 transition-colors duration-200 ${
               focused ? 'text-[#FF5722]' : 'text-gray-400'
             }`}
           />
