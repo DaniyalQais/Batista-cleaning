@@ -60,7 +60,9 @@ export function FloatingInput({
         />
         <label
           htmlFor={id}
-          className={`absolute left-4 transition-all duration-200 pointer-events-none font-mono uppercase tracking-wider ${
+          className={`absolute transition-all duration-200 pointer-events-none font-mono uppercase tracking-wider ${
+            showIcon ? 'left-11' : 'left-4'
+          } ${
             active
               ? 'top-2 text-[9px] text-[#FF5722] font-bold'
               : 'top-1/2 -translate-y-1/2 text-[11px] text-gray-400 font-semibold'
