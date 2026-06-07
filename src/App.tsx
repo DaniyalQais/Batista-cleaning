@@ -6,7 +6,6 @@ import {
   Clock, 
   ShieldCheck, 
   Check, 
-  Calendar, 
   MapPin, 
   Mail, 
   Phone, 
@@ -1627,7 +1626,6 @@ export default function App() {
                   type="date"
                   value={contactInfo.preferredDate}
                   onChange={(v) => setContactInfo({ ...contactInfo, preferredDate: v })}
-                  icon={Calendar}
                 />
               </div>
             </div>

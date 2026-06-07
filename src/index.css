@@ -266,3 +266,26 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 2px 8px rgba(255, 87, 34, 0.35);
   cursor: pointer;
 }
+
+/* Date input — prevent label/placeholder overlap, single calendar icon */
+.date-input-field {
+  min-height: 3.25rem;
+}
+
+.date-input-field::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.55;
+  margin-left: 0.25rem;
+}
+
+.date-input-field::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.85;
+}
+
+.date-input-field::-webkit-datetime-edit {
+  padding: 0;
+}
+
+.date-input-field::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
