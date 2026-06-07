@@ -1,22 +1,18 @@
 # Batista-cleaning
 
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
-
-## Run and deploy your AI Studio app
-
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/e259b3a3-33bc-4cd0-b482-f933254ceecd
+Premium cleaning service demo with live scope builder, real-time estimate dashboard, and quote request flow.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+   ```bash
+   npm install
+   ```
+2. Run the app:
+   ```bash
+   npm run dev
+   ```
+
+The app runs at `http://localhost:3000`.
