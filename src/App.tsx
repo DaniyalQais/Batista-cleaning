@@ -41,6 +41,7 @@ import { AnimatedCounter } from './components/AnimatedCounter';
 import { FloatingInput, FloatingSelect } from './components/FloatingInput';
 import { MobileStickyCTA } from './components/MobileStickyCTA';
 import { StickyContactButton, PhoneLink } from './components/StickyContactButton';
+import { Navbar, NavTarget } from './components/Navbar';
 import { LivePlanPanel } from './components/LivePlanPanel';
 import { useLivePlan, getTaskMeta, getCleaningTypeName } from './hooks/useLivePlan';
 import { buildScopeIntelligence } from './engine/scopeIntelligence';
@@ -258,6 +259,18 @@ export default function App() {
     contactFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
+  const scrollToSection = (target: NavTarget) => {
+    const map: Record<NavTarget, () => void> = {
+      home: () => heroRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      services: () =>
+        document.getElementById('services-preview')?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      about: () =>
+        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      contact: () => scrollToContact(),
+    };
+    map[target]();
+  };
+
   const handleMobileCTA = () => {
     if (step >= 3 || isSubmitted) {
       scrollToContact();
@@ -269,41 +282,14 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FAFBFC] text-[#111827] flex flex-col items-center justify-between antialiased selection:bg-[#FF5722]/15 selection:text-[#FF5722] pb-0 md:pb-0">
       
-      {/* GLOBAL TRANSLUCENT PREMIUM HEADER */}
-      <header className="w-full sticky top-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50 transition-all">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5 cursor-pointer" onClick={handleResetForm}>
-            <div className="w-9 h-9 bg-[#FF5722] rounded-xl flex items-center justify-center shadow-md shadow-[#FF5722]/15">
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-black text-sm tracking-widest text-[#111827] uppercase leading-tight">
-                BATISTA
-              </span>
-              <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest -mt-0.5">
-                Luxury Cleaners
-              </span>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-4">
-            <PhoneLink className="hidden md:inline-flex text-xs font-bold text-gray-600" />
-            <div className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-gray-500">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
-              <span>Available spots open today</span>
-            </div>
-            <button 
-              onClick={scrollToBuilder}
-              className="btn-premium px-4 py-2.5 bg-[#111827] hover:bg-black text-white rounded-xl text-xs font-extrabold tracking-wide uppercase shadow-sm cursor-pointer"
-            >
-              Get Free Estimate
-            </button>
-          </div>
-        </div>
-      </header>
+      <Navbar
+        onLogoClick={() => heroRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+        onNavigate={scrollToSection}
+        onEstimateClick={scrollToBuilder}
+      />
 
       {/* 1. PREMIUM COHESIVE MARKETING HERO SECTION */}
-      <section ref={heroRef} className="w-full relative min-h-[85vh] flex items-center justify-center overflow-hidden py-16 px-4">
+      <section id="home" ref={heroRef} className="w-full relative min-h-[85vh] flex items-center justify-center overflow-hidden py-16 px-4 scroll-mt-header">
         <div 
           className="absolute inset-0 bg-cover bg-center scale-105"
           style={{ backgroundImage: `url(${PREMIUM_IMAGES.heroBg})` }}
@@ -494,7 +480,7 @@ export default function App() {
       {/* 2. INSTANT SCOPE BUILDER SECTION */}
       <section 
         ref={builderRef} 
-        className="w-full max-w-6xl mx-auto py-16 px-4 space-y-8"
+        className="w-full max-w-6xl mx-auto py-16 px-4 space-y-8 scroll-mt-header"
       >
         <div className="text-center space-y-2">
           <span className="text-[10px] font-mono font-black tracking-widest text-[#FF5722] uppercase bg-[#FF5722]/10 px-3 py-1 rounded-md inline-block">
@@ -1224,7 +1210,7 @@ export default function App() {
       </section>
 
       {/* 4. TRUST BADGES ROW & CORE PILLARS SECTION */}
-      <section className="w-full max-w-5xl mx-auto px-4 py-16 space-y-12">
+      <section id="about" className="w-full max-w-5xl mx-auto px-4 py-16 space-y-12 scroll-mt-header">
         <div className="text-center space-y-2">
           <span className="text-[10px] font-mono font-black tracking-widest text-[#FF5722] uppercase bg-[#FF5722]/10 px-3 py-1 rounded-md inline-block">
             VERIFIED BRAND PILLARS
@@ -1344,7 +1330,7 @@ export default function App() {
       </section>
 
       {/* 5. SERVICE GALLERY PHOTO SHOWCASE */}
-      <section id="services-preview" className="w-full bg-white border-y border-gray-100 py-16 px-4">
+      <section id="services-preview" className="w-full bg-white border-y border-gray-100 py-16 px-4 scroll-mt-header">
         <div className="max-w-5xl mx-auto space-y-10">
           <div className="text-center space-y-2">
             <span className="text-[10px] font-mono font-black tracking-widest text-[#FF5722] uppercase block">
@@ -1508,8 +1494,9 @@ export default function App() {
       </section>
 
       <section 
+        id="contact"
         ref={contactFormRef}
-        className="w-full bg-gradient-to-b from-gray-50 to-white border-t border-gray-100 py-16 px-4 pb-28 md:pb-16"
+        className="w-full bg-gradient-to-b from-gray-50 to-white border-t border-gray-100 py-16 px-4 pb-28 md:pb-16 scroll-mt-header"
       >
         <div className="max-w-xl mx-auto space-y-6">
           <motion.div

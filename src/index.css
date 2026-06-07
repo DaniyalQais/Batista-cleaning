@@ -40,6 +40,10 @@
 }
 
 @layer utilities {
+  .scroll-mt-header {
+    scroll-margin-top: calc(2.25rem + 4.25rem);
+  }
+
   .bento-card {
     background: var(--color-card-surface);
     border: 1px solid rgba(17, 24, 39, 0.06);
