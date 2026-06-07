@@ -1710,6 +1710,18 @@ export default function App() {
           <p className="text-[10.5px] text-gray-500 leading-relaxed max-w-md mx-auto">
             &copy; 2026 Batista Cleaning Service. All rights reserved. Estimations are computerized forecasts derived based on static layout parameters. All dynamic rates are subject to real inspections of site conditions by our field managers before final billing.
           </p>
+
+          <p className="text-[10px] text-gray-600 pt-2 border-t border-gray-800/80 max-w-md mx-auto">
+            Designed by{' '}
+            <a
+              href="https://thenexusdynamics.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-[#FF5722] hover:underline underline-offset-2 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5722]/50 focus-visible:rounded-sm"
+            >
+              thenexusdynamics.com
+            </a>
+          </p>
         </div>
       </footer>
 
