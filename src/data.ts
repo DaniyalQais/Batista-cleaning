@@ -1,3 +1,4 @@
+import { BUSINESS_CONFIG } from './config/business';
 import { CleaningTypeOption, RoomType, TaskSelection, PropertyDetails, EstimateResult } from './types';
 
 export const CLEANING_TYPES: CleaningTypeOption[] = [
@@ -89,18 +90,13 @@ export function calculateEstimate(
   selectedTasks: Set<string>,
   properties: PropertyDetails
 ): EstimateResult {
-  // Find base configuration rates
+  const cfg = BUSINESS_CONFIG;
   const selectedTypeConfig = CLEANING_TYPES.find(t => t.id === cleaningType) || CLEANING_TYPES[0];
-  
-  // Base time based on square footage
-  // 1000 sq ft takes roughly 120 minutes of standard cleaning
-  let baseMinutes = (properties.sqFt / 1000) * 120;
-  
-  // Room counts base multipliers
-  baseMinutes += properties.bedroomsCount * 25;
-  baseMinutes += properties.bathroomsCount * 45;
 
-  // Add selected task times
+  let baseMinutes = (properties.sqFt / 1000) * cfg.sqFtMinutesPer1000;
+  baseMinutes += properties.bedroomsCount * cfg.minutesPerBedroom;
+  baseMinutes += properties.bathroomsCount * cfg.minutesPerBathroom;
+
   let tasksTimeAddition = 0;
   Object.values(ROOMS_MAP).forEach(room => {
     room.tasks.forEach(task => {
@@ -109,84 +105,72 @@ export function calculateEstimate(
       }
     });
   });
-  
-  // Combine & apply multiplier based on type (deep/move cleaning requires extra detailing etc.)
+
   let totalTimeMinutes = (baseMinutes + tasksTimeAddition) * selectedTypeConfig.multiplier;
-  
-  // Add time for pets
+
   if (properties.hasPets) {
-    totalTimeMinutes *= 1.15; // +15% for pet dander/fur detailing
+    totalTimeMinutes *= cfg.petLaborMultiplier;
   }
 
-  // Last cleaning multiplier
-  let ageWeight = 1.0;
-  switch (properties.lastCleanInterval) {
-    case 'less-than-1': ageWeight = 0.95; break;
-    case '1-3-months': ageWeight = 1.05; break;
-    case '3-6-months': ageWeight = 1.25; break;
-    case '6-plus': ageWeight = 1.4; break;
-  }
+  const ageWeight = cfg.lastCleanMultipliers[properties.lastCleanInterval];
   totalTimeMinutes *= ageWeight;
 
-  // Clip minimum & maximum times
-  if (totalTimeMinutes < 90) totalTimeMinutes = 90; // At least 1.5 hrs
-  
+  if (totalTimeMinutes < cfg.minimumLaborMinutes) {
+    totalTimeMinutes = cfg.minimumLaborMinutes;
+  }
+
   const hours = parseFloat((totalTimeMinutes / 60).toFixed(1));
 
-  // Determine ideal team size to finish within 2 - 4 hours
   let teamSize = 1;
-  if (hours > 7.5) {
+  if (hours > cfg.crewThresholds.threePersonHours) {
     teamSize = 3;
-  } else if (hours > 3.5) {
+  } else if (hours > cfg.crewThresholds.twoPersonHours) {
     teamSize = 2;
   }
 
-  // Calculate Complexity Score
-  let score: 'A' | 'B' | 'C' = 'A'; // A is simple, B is moderate, C is heavy-duty
+  const gradeCfg = cfg.classGradeThresholds;
+  let score: 'A' | 'B' | 'C' = 'A';
   const multiplierIndex = selectedTypeConfig.multiplier * ageWeight;
-  if (multiplierIndex > 1.8 || hours > 7.0) {
+  if (multiplierIndex > gradeCfg.cMultiplierIndex || hours > gradeCfg.cHours) {
     score = 'C';
-  } else if (multiplierIndex > 1.25 || hours > 4.0) {
+  } else if (multiplierIndex > gradeCfg.bMultiplierIndex || hours > gradeCfg.bHours) {
     score = 'B';
   }
 
-  // Estimate price ranges dynamically
-  // Average hourly rate ranges between $45 - $65 per person-hour depending on complexity
-  const ratePerHour = 55;
-  const rawPriceBase = hours * ratePerHour;
-  
-  // Apply a dynamic range
-  let priceRangeMin = Math.round(rawPriceBase * 0.88);
-  let priceRangeMax = Math.round(rawPriceBase * 1.12);
+  const rawPriceBase = hours * cfg.hourlyRate;
+  let priceRangeMin = Math.round(rawPriceBase * cfg.priceRangeSpread.low);
+  let priceRangeMax = Math.round(rawPriceBase * cfg.priceRangeSpread.high);
 
-  // Set minimum rate floor
-  if (priceRangeMin < 110) {
-    priceRangeMin = 110;
-    priceRangeMax = 160;
+  if (priceRangeMin < cfg.minimumPrice.min) {
+    priceRangeMin = cfg.minimumPrice.min;
+    priceRangeMax = cfg.minimumPrice.max;
   }
 
-  const discountedMin = Math.max(110, priceRangeMin - 50);
-  const discountedMax = Math.max(160, priceRangeMax - 50);
+  const discountedMin = Math.max(cfg.minimumPrice.min, priceRangeMin - cfg.discountAmount);
+  const discountedMax = Math.max(cfg.minimumPrice.max, priceRangeMax - cfg.discountAmount);
 
-  // Dynamic complexity score (0–100) from labor, tasks, and property factors
+  const cx = cfg.complexityNumeric;
   let taskWeight = 0;
   Object.values(ROOMS_MAP).forEach(room => {
     room.tasks.forEach(task => {
       if (selectedTasks.has(task.id)) {
-        taskWeight += task.baseWeightLevel * 4;
+        taskWeight += task.baseWeightLevel * cx.taskWeightMultiplier;
       }
     });
   });
 
-  const sizeFactor = Math.min(30, (properties.sqFt / 5000) * 30);
-  const roomFactor = properties.bedroomsCount * 3 + properties.bathroomsCount * 5;
-  const typeFactor = selectedTypeConfig.multiplier * 12;
-  const petFactor = properties.hasPets ? 8 : 0;
-  const ageFactor = (ageWeight - 1) * 25;
-  const hourFactor = hours * 6;
+  const sizeFactor = Math.min(cx.maxSizeFactor, (properties.sqFt / cx.sizeFactorDivisor) * cx.maxSizeFactor);
+  const roomFactor = properties.bedroomsCount * cx.bedroomFactor + properties.bathroomsCount * cx.bathroomFactor;
+  const typeFactor = selectedTypeConfig.multiplier * cx.typeFactorMultiplier;
+  const petFactor = properties.hasPets ? cx.petFactor : 0;
+  const ageFactor = (ageWeight - 1) * cx.ageFactorMultiplier;
+  const hourFactor = hours * cx.hourFactorMultiplier;
 
   const rawComplexity = taskWeight + sizeFactor + roomFactor + typeFactor + petFactor + ageFactor + hourFactor;
-  const complexityScoreNumeric = Math.min(100, Math.max(15, Math.round(rawComplexity * 0.55)));
+  const complexityScoreNumeric = Math.min(
+    cx.max,
+    Math.max(cx.min, Math.round(rawComplexity * cx.scaleFactor))
+  );
 
   return {
     hours,

@@ -43,6 +43,7 @@ import { MobileStickyCTA } from './components/MobileStickyCTA';
 import { StickyContactButton, PhoneLink } from './components/StickyContactButton';
 import { LivePlanPanel } from './components/LivePlanPanel';
 import { useLivePlan, getTaskMeta, getCleaningTypeName } from './hooks/useLivePlan';
+import { buildScopeIntelligence } from './engine/scopeIntelligence';
 
 // Premium Curated Images
 const PREMIUM_IMAGES = {
@@ -139,6 +140,12 @@ export default function App() {
   }, [cleaningType, selectedTasks, propertyDetails]);
 
   const { isRecalculating, insight, triggerRecalc } = useLivePlan(estimate);
+
+  const intelligence = useMemo(() => {
+    return buildScopeIntelligence(cleaningType, selectedTasks, propertyDetails, estimate, {
+      hasCompletedStep2: step >= 2,
+    });
+  }, [cleaningType, selectedTasks, propertyDetails, estimate, step]);
 
   const sqFtProgress = useMemo(() => {
     return ((propertyDetails.sqFt - 500) / (5000 - 500)) * 100;
@@ -462,7 +469,7 @@ export default function App() {
                 <div className="bg-gray-50/80 rounded-xl p-3 border border-gray-100">
                   <p className="text-[9px] font-bold text-gray-400 uppercase">Score</p>
                   <p className="text-sm font-black text-gray-900">
-                    <AnimatedCounter value={estimate.complexityScoreNumeric} />/100
+                    {intelligence.complexityLabel}
                   </p>
                 </div>
               </div>
@@ -675,6 +682,7 @@ export default function App() {
             <div className="lg:hidden">
               <LivePlanPanel
                 estimate={estimate}
+                intelligence={intelligence}
                 cleaningType={cleaningType}
                 selectedTasks={selectedTasks}
                 propertyDetails={propertyDetails}
@@ -1154,6 +1162,7 @@ export default function App() {
                 <div className="sticky top-24">
                   <LivePlanPanel
                     estimate={estimate}
+                    intelligence={intelligence}
                     cleaningType={cleaningType}
                     selectedTasks={selectedTasks}
                     propertyDetails={propertyDetails}
@@ -1182,13 +1191,13 @@ export default function App() {
             className="text-center space-y-2"
           >
             <span className="text-[10px] font-mono font-black tracking-widest text-[#FF5722] uppercase">
-              Live Estimate Engine
+              Scope Intelligence Engine
             </span>
             <h2 className="font-display font-black text-3xl text-gray-900 tracking-tight">
-              2. Live Estimate Dashboard
+              2. Scope Intelligence Dashboard
             </h2>
             <p className="text-gray-500 text-sm max-w-md mx-auto leading-relaxed">
-              Your plan updates instantly as you configure scope above.
+              Live recommendations, labor breakdown, and complexity analysis for your custom plan.
             </p>
           </motion.div>
 
@@ -1198,6 +1207,7 @@ export default function App() {
           >
             <LivePlanPanel
               estimate={estimate}
+              intelligence={intelligence}
               cleaningType={cleaningType}
               selectedTasks={selectedTasks}
               propertyDetails={propertyDetails}
