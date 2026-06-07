@@ -187,10 +187,9 @@ export function Navbar({ onLogoClick, onNavigate, onEstimateClick }: NavbarProps
 
   return (
     <>
-      <div className="relative z-50 w-full">
-        <TopHeaderBar />
+      <TopHeaderBar />
 
-        <header className="w-full bg-white/95 backdrop-blur-md border-b border-gray-100/90 shadow-[0_1px_0_rgba(17,24,39,0.04),0_4px_16px_-4px_rgba(17,24,39,0.06)]">
+      <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-gray-100/90 shadow-[0_1px_0_rgba(17,24,39,0.04),0_4px_16px_-4px_rgba(17,24,39,0.06)]">
           <div className="max-w-6xl mx-auto px-4 h-[4.25rem] flex items-center justify-between gap-4">
             <BrandMark onClick={onLogoClick} />
 
@@ -239,7 +238,6 @@ export function Navbar({ onLogoClick, onNavigate, onEstimateClick }: NavbarProps
             </div>
           </div>
         </header>
-      </div>
 
       <AnimatePresence>
         {menuOpen && (

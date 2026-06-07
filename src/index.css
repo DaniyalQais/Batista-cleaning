@@ -41,7 +41,7 @@
 
 @layer utilities {
   .scroll-mt-header {
-    scroll-margin-top: calc(2.25rem + 4.25rem);
+    scroll-margin-top: 4.25rem;
   }
 
   .bento-card {
