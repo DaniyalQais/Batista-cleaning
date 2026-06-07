@@ -41,6 +41,7 @@ import {
 import { AnimatedCounter } from './components/AnimatedCounter';
 import { FloatingInput, FloatingSelect } from './components/FloatingInput';
 import { MobileStickyCTA } from './components/MobileStickyCTA';
+import { StickyContactButton, PhoneLink } from './components/StickyContactButton';
 import { LivePlanPanel } from './components/LivePlanPanel';
 import { useLivePlan, getTaskMeta, getCleaningTypeName } from './hooks/useLivePlan';
 
@@ -280,6 +281,7 @@ export default function App() {
           </div>
           
           <div className="flex items-center gap-4">
+            <PhoneLink className="hidden md:inline-flex text-xs font-bold text-gray-600" />
             <div className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-gray-500">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
               <span>Available spots open today</span>
@@ -1516,6 +1518,9 @@ export default function App() {
             <p className="text-gray-500 text-sm max-w-sm mx-auto leading-relaxed">
               Lock in your scope and claim your $50 summer discount.
             </p>
+            <p className="text-sm text-gray-600 font-semibold">
+              Prefer to talk? <PhoneLink className="text-[#FF5722] font-black" />
+            </p>
           </motion.div>
 
           {isSubmitted ? (
@@ -1531,6 +1536,9 @@ export default function App() {
                 <h3 className="text-xl font-display font-black text-gray-900">Request Received</h3>
                 <p className="text-sm text-gray-500 mt-1">
                   Thanks, <span className="font-bold text-gray-800">{contactInfo.name}</span>. We'll reach out within 15 minutes.
+                </p>
+                <p className="text-xs text-gray-400 mt-2">
+                  Need help sooner? <PhoneLink className="text-[#FF5722]" />
                 </p>
               </div>
               <div className="bg-gray-50 rounded-2xl p-4 text-left space-y-2 text-sm">
@@ -1664,6 +1672,8 @@ export default function App() {
         onClick={handleMobileCTA}
       />
 
+      <StickyContactButton elevated={showMobileCTA} />
+
       {/* LUXURY FOOTER */}
       <footer className="w-full bg-[#111827] text-gray-400 py-12 px-4 text-center border-t border-gray-800 relative z-10 text-xs">
         <div className="max-w-4xl mx-auto space-y-6">
@@ -1686,6 +1696,8 @@ export default function App() {
             <span className="text-gray-600">•</span>
             <span className="text-gray-300">Los Angeles, CA</span>
           </div>
+
+          <PhoneLink className="text-sm font-bold text-gray-300 hover:text-[#FF5722] normal-case tracking-normal justify-center" />
 
           <p className="text-[10.5px] text-gray-500 leading-relaxed max-w-md mx-auto">
             &copy; 2026 Batista Cleaning Service. All rights reserved. Estimations are computerized forecasts derived based on static layout parameters. All dynamic rates are subject to real inspections of site conditions by our field managers before final billing.

@@ -1,0 +1,2 @@
+export const BATISTA_PHONE_DISPLAY = '+1 (480) 869-4902';
+export const BATISTA_PHONE_TEL = 'tel:+14808694902';
