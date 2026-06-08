@@ -1,6 +1,5 @@
 {
-  "name": "Batista Cleaning Service",
-  "description": "Premium SaaS-style mobile-first cleaning scope builder and estimate platform.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "name": "Batista Luxury Cleaners",
+  "description": "Premium cleaning service with live scope builder, real-time estimates, and quote request flow for the Greater Phoenix Valley.",
+  "requestFramePermissions": []
 }
