@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  Sparkles, 
   Star, 
   Clock, 
   ShieldCheck, 
@@ -41,6 +40,7 @@ import { AnimatedCounter } from './components/AnimatedCounter';
 import { FloatingInput, FloatingSelect } from './components/FloatingInput';
 import { MobileStickyCTA } from './components/MobileStickyCTA';
 import { StickyContactButton, PhoneLink } from './components/StickyContactButton';
+import { RegionalFooter } from './components/RegionalFooter';
 import { Navbar, NavTarget } from './components/Navbar';
 import { LivePlanPanel } from './components/LivePlanPanel';
 import { useLivePlan, getTaskMeta, getCleaningTypeName } from './hooks/useLivePlan';
@@ -1669,48 +1669,7 @@ export default function App() {
 
       <StickyContactButton elevated={showMobileCTA} />
 
-      {/* LUXURY FOOTER */}
-      <footer className="w-full bg-[#111827] text-gray-400 py-12 px-4 text-center border-t border-gray-800 relative z-10 text-xs">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="flex items-center justify-center gap-2">
-            <div className="w-8 h-8 bg-[#FF5722] rounded-xl flex items-center justify-center shadow-md">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
-            <div className="text-left">
-              <span className="font-display font-black text-white tracking-widest text-sm block">
-                BATISTA
-              </span>
-              <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest block -mt-1">Luxury Cleaners</span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-wider border-y border-gray-800 py-4 max-w-lg mx-auto">
-            <span className="text-gray-300">Miami, FL</span>
-            <span className="text-gray-600">•</span>
-            <span className="text-gray-300">New York, NY</span>
-            <span className="text-gray-600">•</span>
-            <span className="text-gray-300">Los Angeles, CA</span>
-          </div>
-
-          <PhoneLink className="text-sm font-bold text-gray-300 hover:text-[#FF5722] normal-case tracking-normal justify-center" />
-
-          <p className="text-[10.5px] text-gray-500 leading-relaxed max-w-md mx-auto">
-            &copy; 2026 Batista Cleaning Service. All rights reserved. Estimations are computerized forecasts derived based on static layout parameters. All dynamic rates are subject to real inspections of site conditions by our field managers before final billing.
-          </p>
-
-          <p className="text-[10px] text-gray-600 pt-2 border-t border-gray-800/80 max-w-md mx-auto">
-            Designed by{' '}
-            <a
-              href="https://thenexusdynamics.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-500 hover:text-[#FF5722] hover:underline underline-offset-2 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5722]/50 focus-visible:rounded-sm"
-            >
-              thenexusdynamics.com
-            </a>
-          </p>
-        </div>
-      </footer>
+      <RegionalFooter />
 
     </div>
   );

@@ -8,18 +8,22 @@ interface StickyContactButtonProps {
 
 export function StickyContactButton({ elevated = false }: StickyContactButtonProps) {
   return (
-    <a
-      href={BATISTA_PHONE_TEL}
-      aria-label="Call us at +1 480 869 4902"
-      className={`fixed right-4 z-40 flex items-center gap-2 min-h-11 min-w-11 px-4 py-3 bg-[#FF5722] hover:bg-[#E64A19] text-white rounded-2xl font-display font-black text-xs tracking-widest uppercase shadow-lg shadow-[#FF5722]/30 hover:shadow-xl hover:shadow-[#FF5722]/40 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 cursor-pointer ${
+    <div
+      className={`fixed right-6 z-50 ${
         elevated
-          ? 'bottom-[max(6rem,calc(env(safe-area-inset-bottom)+5.5rem))] md:bottom-[max(1.5rem,env(safe-area-inset-bottom))]'
-          : 'bottom-[max(1.5rem,env(safe-area-inset-bottom))]'
+          ? 'bottom-[max(6.5rem,calc(env(safe-area-inset-bottom)+5.75rem))] md:bottom-6'
+          : 'bottom-[max(1.5rem,env(safe-area-inset-bottom))] md:bottom-6'
       }`}
     >
-      <Phone className="w-5 h-5 shrink-0" aria-hidden="true" />
-      <span className="hidden sm:inline">Call Us</span>
-    </a>
+      <a
+        href={BATISTA_PHONE_TEL}
+        aria-label={`Call or text ${BATISTA_PHONE_DISPLAY}`}
+        className="inline-flex items-center gap-2 min-h-11 px-5 py-3 bg-[#FF5722] hover:bg-[#E64A19] text-white rounded-full font-bold text-sm whitespace-nowrap shadow-lg shadow-[#FF5722]/35 hover:shadow-xl hover:shadow-[#FF5722]/45 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#FF5722]"
+      >
+        <span aria-hidden="true">📞</span>
+        <span>Call / Text Line</span>
+      </a>
+    </div>
   );
 }
 
