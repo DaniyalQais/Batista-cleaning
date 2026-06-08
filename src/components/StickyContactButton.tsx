@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Phone } from 'lucide-react';
 import { BATISTA_PHONE_DISPLAY, BATISTA_PHONE_TEL } from '../constants/contact';
 
@@ -7,9 +8,26 @@ interface StickyContactButtonProps {
 }
 
 export function StickyContactButton({ elevated = false }: StickyContactButtonProps) {
+  const [footerInView, setFooterInView] = useState(false);
+
+  useEffect(() => {
+    const footer = document.getElementById('site-footer');
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setFooterInView(entry.isIntersecting),
+      { threshold: 0, rootMargin: '0px 0px 0px 0px' },
+    );
+
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div
-      className={`fixed right-6 z-50 ${
+      className={`fixed right-6 z-50 transition-all duration-300 ${
+        footerInView ? 'max-md:opacity-0 max-md:pointer-events-none max-md:translate-y-2' : 'opacity-100'
+      } ${
         elevated
           ? 'bottom-[max(6.5rem,calc(env(safe-area-inset-bottom)+5.75rem))] md:bottom-6'
           : 'bottom-[max(1.5rem,env(safe-area-inset-bottom))] md:bottom-6'

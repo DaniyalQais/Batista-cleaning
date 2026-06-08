@@ -6,7 +6,7 @@ const SERVICE_AREA =
 
 export function RegionalFooter() {
   return (
-    <footer className="w-full bg-[#F8FAFC] text-gray-600 py-12 px-4 text-center border-t border-gray-200/80 relative z-10">
+    <footer id="site-footer" className="w-full bg-[#F8FAFC] text-gray-600 py-12 px-4 text-center border-t border-gray-200/80 relative z-10">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center justify-center gap-2">
           <div className="w-8 h-8 bg-[#FF5722] rounded-xl flex items-center justify-center shadow-md shadow-[#FF5722]/20">
